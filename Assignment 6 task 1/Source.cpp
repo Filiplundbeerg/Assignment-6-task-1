@@ -5,6 +5,8 @@ int Node::getData()
 	return this->data;
 }
 
+int Node::getDataNode() { return this->dataNode; }
+
 void Node::setData(int p)
 {
 	this->data = p;
@@ -13,6 +15,7 @@ void Node::setData(int p)
 Node::Node(int p)
 {
 	this->data = p;
+	this->dataNode = p;
 	this->nextNode = nullptr;
 	this->prevNode = nullptr;
 }
@@ -88,7 +91,7 @@ bool DoublyLinkedList::Replace(Node* oldN, Node* newN)
 }
 int DoublyLinkedList::Search(Node* data)
 {
-	return data->getData();
+	return data->getDataNode();
 }
 Node* DoublyLinkedList::NodeAt(int pos)
 {
@@ -121,7 +124,7 @@ void DoublyLinkedList::Display_forward()
 	Node* currentNode = head;
 	while (currentNode != nullptr)
 	{
-		std::cout << currentNode->getData();
+		std::cout << currentNode->getDataNode();
 		currentNode = currentNode->nextNode;
 	}
 	delete currentNode;
@@ -131,7 +134,7 @@ void DoublyLinkedList::Display_backward()
 	Node* currentNode = foot;
 	while (currentNode != nullptr)
 	{
-		std::cout << currentNode->getData();
+		std::cout << currentNode->getDataNode();
 		currentNode = currentNode->prevNode;
 	}
 }
