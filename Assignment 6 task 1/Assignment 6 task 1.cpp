@@ -13,18 +13,27 @@ int main()
 
 	DoublyLinkedList list;
 
+
 	list.Add(n0, 0);
 	//list.Add(&n1, 10); //should be a false or -1 (error/invalid) 
 	//list.Add(nullptr, 1); //should be a false or -1 (error/invalid) 
 	list.Add(n1, 1);
 	//list.Remove(3); //should be a false or -1 (error/invalid) 
 	list.Add(n2, 2);
-	//list.Display_forward();
+//	list.Display_forward();
 	list.Add(n3, 1);
-	int a = list.Search(n3);
-	int bv = list.Search(n2);
-	//list.Display_backward();
+	list.Display_forward();/*
+	list.Remove(3);
 	list.Display_forward();
+	list.Display_backward();
+	//list.Search(&n4); //should be a false or -1 (error/invalid) 
+	list.Search(n3);
+	//list.Replace(&n3, nullptr); //should be a false or -1 (error/invalid) 
+	//list.Replace(&n5, &n4); //should be a false or -1 (error/invalid) 
+	list.Replace(n3, n4);
+	list.Display_forward();
+	list.size();*/
+
     return 0;
 }
 

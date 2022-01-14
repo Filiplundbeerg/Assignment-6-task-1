@@ -1,19 +1,8 @@
 #include "Header.h"
 
-int Node::getPos()
-{
-	return this->posNode;
-}
-
-
 int Node::getData()
 {
 	return this->data;
-}
-
-void Node::setPos(int p)
-{
-	this->posNode = p;
 }
 
 void Node::setData(int p)
@@ -23,7 +12,6 @@ void Node::setData(int p)
 
 Node::Node(int p)
 {
-	this->posNode = p;
 	this->data = p;
 	this->nextNode = nullptr;
 	this->prevNode = nullptr;
@@ -38,73 +26,69 @@ bool DoublyLinkedList::Add(Node* insert, int pos)
 	else
 	{
 		this->length += 1;
-		insert->setPos(pos);
 		insert->setData(pos);
-		if (insert->getPos() == 0 && length == 1)
+		if (insert->getData() == 0 && length == 1)
 		{
 			head = insert;
-			insert->nextNode = nullptr;
+			insert->nextNode = NodeAt(pos+1);
 			insert->prevNode = nullptr;
 		}
-		else if (insert->getPos() == length-1 )
+		else if (insert->getData() == length-1 )
 		{ 
 			foot = insert;
 			insert->nextNode = nullptr;
 			insert->prevNode = NodeAt(pos - 1);
+			insert->prevNode->nextNode = insert;
 		}
 		else
 		{
-			insert->nextNode = NodeAt(pos + 1);
+			insert->nextNode = NodeAt(pos);
+			insert->nextNode->prevNode = insert;
 			insert->prevNode = NodeAt(pos - 1);			
-			NodeAt(pos + 1)->prevNode = insert;
-			NodeAt(pos - 1)->nextNode = insert;
-
+			insert->prevNode->nextNode = insert;
 		}
-
-		/*
-		insert->setPos(pos);
-		if (insert->getPos() == 0)
-		{
-			insert->prevNode = nullptr;
-			head = insert;
-			if (length > pos + 1)
-			this->NodeAt(pos + 1)->prevNode = head;
-		}
-		else
-		{
-			insert->prevNode = this->NodeAt(pos - 1);
-			insert->nextNode = this->NodeAt(pos + 1);
-			if(length>pos+1)
-				this->NodeAt(pos + 1)->prevNode = insert;
-			if(0<=pos)
-				this->NodeAt(pos - 1)->nextNode = insert;
-		}
-
-
-		if (insert->getPos() == length-1)
-		{
-			insert->nextNode = nullptr;
-			foot = insert;
-			if(length>1)
-				this->NodeAt(pos - 1)->nextNode = insert;
-		}
-		else
-			insert->nextNode = this->NodeAt(pos + 1);*/
 		return true;
 	}
 }
 
 bool DoublyLinkedList::Remove(int pos)
 {
-	return true;
+	if (pos > length)
+		return false;
+	else if (pos < 0)
+		return false;
+	else if (pos == length-1)
+	{
+		NodeAt(pos - 1)->nextNode = nullptr;
+		foot = NodeAt(pos - 1);
+		delete NodeAt(pos);
+		return true;
+	}
+	else if (pos == 0)
+	{
+		NodeAt(pos + 1)->prevNode = nullptr;
+		head = NodeAt(pos + 1);
+		delete NodeAt(pos);
+		return true;
+	}
+	else
+	{
+		Node* a = NodeAt(pos + 1);
+		a->prevNode = NodeAt(pos - 1);
+		NodeAt(pos - 1)->nextNode = NodeAt(pos + 1);
+		delete NodeAt(pos);
+		return true;
+	}
 }
 bool DoublyLinkedList::Replace(Node* oldN, Node* newN)
 {
+	newN->nextNode = oldN->nextNode;
+	newN->prevNode = oldN->prevNode;
 	return true;
 }
 int DoublyLinkedList::Search(Node* data)
 {
-	return data->getPos();
+	return data->getData();
 }
 Node* DoublyLinkedList::NodeAt(int pos)
 {
@@ -119,14 +103,14 @@ Node* DoublyLinkedList::NodeAt(int pos)
 	else
 	{
 		Node* currentNode = head;
+		int count = 0;
 		do
 		{
-			if (currentNode->getPos() == pos || currentNode == head && length == 2)
-			{
+			if (count == pos)
 				return currentNode;
-			}
+			count++;
 			currentNode = currentNode->nextNode;
-		} while ((currentNode != nullptr))  /*(currentNode->getPos() == pos - 1))*/;
+		} while ((currentNode != nullptr));
 		
 		
 	return currentNode;
@@ -139,7 +123,6 @@ void DoublyLinkedList::Display_forward()
 	{
 		std::cout << currentNode->getData();
 		currentNode = currentNode->nextNode;
-
 	}
 	delete currentNode;
 }

@@ -4,14 +4,11 @@
 class Node
 {
 private:
-	int posNode;
 	int data;
 public:
 	Node* nextNode;
 	Node* prevNode;
-	int getPos();
 	int getData();
-	void setPos(int p);
 	void setData(int dat);
 	Node(int p);
 };
