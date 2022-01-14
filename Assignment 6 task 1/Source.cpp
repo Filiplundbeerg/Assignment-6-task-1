@@ -5,8 +5,6 @@ int Node::getData()
 	return this->data;
 }
 
-int Node::getDataNode() { return this->dataNode; }
-
 void Node::setData(int p)
 {
 	this->data = p;
@@ -15,7 +13,6 @@ void Node::setData(int p)
 Node::Node(int p)
 {
 	this->data = p;
-	this->dataNode = p;
 	this->nextNode = nullptr;
 	this->prevNode = nullptr;
 }
@@ -29,14 +26,13 @@ bool DoublyLinkedList::Add(Node* insert, int pos)
 	else
 	{
 		this->length += 1;
-		insert->setData(pos);
-		if (insert->getData() == 0 && length == 1)
+		if (pos == 0 && length == 1)
 		{
 			head = insert;
 			insert->nextNode = NodeAt(pos+1);
 			insert->prevNode = nullptr;
 		}
-		else if (insert->getData() == length-1 )
+		else if (pos == length-1 )
 		{ 
 			foot = insert;
 			insert->nextNode = nullptr;
@@ -85,13 +81,51 @@ bool DoublyLinkedList::Remove(int pos)
 }
 bool DoublyLinkedList::Replace(Node* oldN, Node* newN)
 {
-	newN->nextNode = oldN->nextNode;
-	newN->prevNode = oldN->prevNode;
-	return true;
+	if (oldN == nullptr && newN == nullptr)
+	{
+		std::cout << "Argument 2 and argument 1 are nullpointers.";
+		return false;
+	}
+	else if (oldN == nullptr)
+	{
+		std::cout << "Argument 2 is a nullpointer.";
+		return false;
+	}
+	else if (newN == nullptr)
+	{
+		std::cout << "Argument 1 is a nullpointer.";
+		return false;
+	}
+	if (this->Search(oldN) == -1)
+	{
+		std::cout << "Old node is not in list.";
+		return false;
+	}
+	else
+	{
+		newN->nextNode = oldN->nextNode;
+		newN->prevNode = oldN->prevNode;
+		newN->prevNode->nextNode = newN;
+		return true;
+	}
 }
 int DoublyLinkedList::Search(Node* data)
 {
-	return data->getDataNode();
+	if (data != nullptr) 
+	{
+		int count = 0;
+		Node* currentNode = head;
+		do
+		{
+			if (currentNode == data)
+				return count;
+			count++;
+			currentNode = currentNode->nextNode;
+		} while ((currentNode != nullptr));
+		return -1;
+	}
+	else
+		return -1;
 }
 Node* DoublyLinkedList::NodeAt(int pos)
 {
@@ -124,7 +158,7 @@ void DoublyLinkedList::Display_forward()
 	Node* currentNode = head;
 	while (currentNode != nullptr)
 	{
-		std::cout << currentNode->getDataNode();
+		std::cout << currentNode->getData();
 		currentNode = currentNode->nextNode;
 	}
 	delete currentNode;
@@ -134,7 +168,7 @@ void DoublyLinkedList::Display_backward()
 	Node* currentNode = foot;
 	while (currentNode != nullptr)
 	{
-		std::cout << currentNode->getDataNode();
+		std::cout << currentNode->getData();
 		currentNode = currentNode->prevNode;
 	}
 }

@@ -5,12 +5,10 @@ class Node
 {
 private:
 	int data;
-	int dataNode;
 public:
 	Node* nextNode;
 	Node* prevNode;
 	int getData();
-	int getDataNode();
 	void setData(int dat);
 	Node(int p);
 };

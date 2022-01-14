@@ -10,21 +10,32 @@ int main()
 	Node* n2 = new Node(2);
 	Node* n3 = new Node(3);
 	Node* n4 = new Node(4);
+	Node* n5 = new Node(5);
 
 	DoublyLinkedList list;
-
-
 	list.Add(n0, 0);
+	list.Add(n1, 1);
+	list.Add(n2, 2);
+	//list.Add(n3, 3);
+	//std::cout << list.Search(n2);
+	list.Display_forward();
+	std::cout << " ";
+	list.Replace(n2,n3);
+	list.Display_forward();
+
+
+	/*	list.Add(n0, 0);
 	//list.Add(&n1, 10); //should be a false or -1 (error/invalid) 
 	//list.Add(nullptr, 1); //should be a false or -1 (error/invalid) 
 	list.Add(n1, 1);
-	//list.Remove(3); //should be a false or -1 (error/invalid) 
+	list.Remove(0); //should be a false or -1 (error/invalid) 
 	list.Add(n2, 2);
 //	list.Display_forward();
 	list.Add(n3, 1);
-	list.Display_forward();/*
+	//list.Display_forward();
 	list.Remove(3);
 	list.Display_forward();
+	std::cout << " ";
 	list.Display_backward();
 	//list.Search(&n4); //should be a false or -1 (error/invalid) 
 	list.Search(n3);
